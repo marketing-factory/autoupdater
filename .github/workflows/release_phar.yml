@@ -38,16 +38,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sed -i "s#^MAILER_DSN=.*\$#MAILER_DSN=${{ secrets.MAILER_DSN }}#" .env
           composer install --prefer-dist --no-progress --no-dev --optimize-autoloader
-          composer dump-env prod
-          bin/console cache:clear
-          bin/console cache:warmup
 
       - name: Build phar
         uses: docker://php:7.3-cli-alpine3.10
         with:
-          args: "/bin/sh -c \"apk --no-cache add git && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && curl -LO https://github.com/humbug/box/releases/download/3.8.3/box.phar && mv box.phar /usr/local/bin/box && chmod +x /usr/local/bin/box && box compile && chmod 755 pwmgr.phar\""
+          args: "/bin/sh -c \"apk --no-cache add git && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && curl -LO https://github.com/humbug/box/releases/download/3.8.3/box.phar && mv box.phar /usr/local/bin/box && chmod +x /usr/local/bin/box && box compile && chmod 755 autoupdater.phar\""
 
       - name: Create Release
         id: create_release
