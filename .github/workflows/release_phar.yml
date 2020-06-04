@@ -68,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./pwmgr.phar
-          asset_name: pwmgr.phar
+          asset_path: ./autoupdater.phar
+          asset_name: autoupdater.phar
           asset_content_type: application/octet-stream
