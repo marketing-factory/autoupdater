@@ -1,0 +1,4 @@
+gitlab_url: https://gitlab.com/
+gitlab_user_username: autoupdater
+gitlab_user_email: autoupdater@example.org
+gitlab_auth_token: secretauthtokentobeacquired

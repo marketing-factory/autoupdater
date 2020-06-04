@@ -1,0 +1,179 @@
+{
+    "clue/stream-filter": {
+        "version": "v1.4.1"
+    },
+    "composer/ca-bundle": {
+        "version": "1.2.7"
+    },
+    "composer/composer": {
+        "version": "1.10.7"
+    },
+    "composer/semver": {
+        "version": "1.5.1"
+    },
+    "composer/spdx-licenses": {
+        "version": "1.5.3"
+    },
+    "composer/xdebug-handler": {
+        "version": "1.4.2"
+    },
+    "gitonomy/gitlib": {
+        "version": "v1.2.0"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "6.5.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
+    "justinrainbow/json-schema": {
+        "version": "5.2.10"
+    },
+    "m4tthumphrey/php-gitlab-api": {
+        "version": "9.16.0"
+    },
+    "php": {
+        "version": "7.4"
+    },
+    "php-http/client-common": {
+        "version": "2.1.0"
+    },
+    "php-http/discovery": {
+        "version": "1.7.4"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
+    },
+    "php-http/httplug": {
+        "version": "2.1.0"
+    },
+    "php-http/message": {
+        "version": "1.8.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/multipart-stream-builder": {
+        "version": "1.1.0"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
+    },
+    "phpstan/extension-installer": {
+        "version": "1.0.4"
+    },
+    "phpstan/phpstan": {
+        "version": "0.12.25"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.12.6"
+    },
+    "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.0"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
+    "psr/log": {
+        "version": "1.1.3"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "seld/jsonlint": {
+        "version": "1.8.0"
+    },
+    "seld/phar-utils": {
+        "version": "1.1.0"
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
+        },
+        "files": [
+            "phpcs.xml.dist"
+        ]
+    },
+    "symfony/console": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.1",
+            "ref": "c6d02bdfba9da13c22157520e32a602dbee8a75c"
+        },
+        "files": [
+            "bin/console"
+        ]
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.1.2"
+    },
+    "symfony/filesystem": {
+        "version": "v5.1.0"
+    },
+    "symfony/finder": {
+        "version": "v5.1.0"
+    },
+    "symfony/flex": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
+        },
+        "files": [
+            ".env"
+        ]
+    },
+    "symfony/options-resolver": {
+        "version": "v4.4.3"
+    },
+    "symfony/polyfill-ctype": {
+        "version": "v1.13.1"
+    },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-mbstring": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.17.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
+    },
+    "symfony/process": {
+        "version": "v4.4.3"
+    },
+    "symfony/service-contracts": {
+        "version": "v2.1.2"
+    },
+    "symfony/string": {
+        "version": "v5.1.0"
+    },
+    "symfony/yaml": {
+        "version": "v4.4.3"
+    }
+}

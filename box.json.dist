@@ -1,0 +1,48 @@
+{
+  "algorithm": "SHA256",
+  "check-requirements": false,
+  "chmod": "0700",
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\Json",
+    "KevinGH\\Box\\Compactor\\Php"
+  ],
+  "compression": null,
+  "directories": [
+  ],
+  "directories-bin": [
+  ],
+  "files-bin": [
+  ],
+  "finder": [
+    {
+      "notName": "/LICENSE|.*\\.md|.*\\.dist|Makefile|composer\\.json|composer\\.lock/",
+      "exclude": [
+        "doc",
+        "test",
+        "test_old",
+        "tests",
+        "Tests",
+        "vendor-bin"
+      ],
+      "in": [
+        "src",
+        "vendor"
+      ]
+    },
+    {
+      "name": "LICENSE",
+      "in": "vendor/composer/composer"
+    },
+    {
+      "name": "composer.json",
+      "in": "."
+    },
+    {
+      "name": "autoupdater.php",
+      "in": "."
+    }
+  ],
+  "git-version": "package_version",
+  "main": "autoupdater.php",
+  "output": "autoupdater.phar"
+}

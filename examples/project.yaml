@@ -1,0 +1,4 @@
+assignee: 'johndoe'
+branch: 'support/autoupdate'
+packages:
+  - composer.json

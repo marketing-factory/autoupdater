@@ -1,0 +1,73 @@
+name: phar build
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get commit message
+        run: |
+          echo ::set-env name=commitmsg::$(git tag -l --format='%(contents)' ${GITHUB_REF/refs\/tags\//})
+      - name: Show commit message
+        run : echo $commitmsg
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.3'
+          extensions: ctype, intl, json, mbstring, mysqli, pdo
+          coverage: none
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: |
+          sed -i "s#^MAILER_DSN=.*\$#MAILER_DSN=${{ secrets.MAILER_DSN }}#" .env
+          composer install --prefer-dist --no-progress --no-dev --optimize-autoloader
+          composer dump-env prod
+          bin/console cache:clear
+          bin/console cache:warmup
+
+      - name: Build phar
+        uses: docker://php:7.3-cli-alpine3.10
+        with:
+          args: "/bin/sh -c \"apk --no-cache add git && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && curl -LO https://github.com/humbug/box/releases/download/3.8.3/box.phar && mv box.phar /usr/local/bin/box && chmod +x /usr/local/bin/box && box compile && chmod 755 pwmgr.phar\""
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: $commitmsg
+          draft: false
+          prerelease: contains('-rc', ${GITHUB_REF/refs\/tags\//}) || contains('-alpha', ${GITHUB_REF/refs\/tags\//}) || contains('-beta', ${GITHUB_REF/refs\/tags\//})
+
+      - name: Upload Release phar
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./pwmgr.phar
+          asset_name: pwmgr.phar
+          asset_content_type: application/octet-stream
