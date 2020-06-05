@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Mfc\Autoupdater;
 
+use DateTime;
 use DateTimeZone;
+use Exception;
 use Gitlab\Client as GitLabClient;
 use Gitlab\Model\MergeRequest;
 use Gitlab\Model\Project;
@@ -24,10 +26,6 @@ use Symfony\Component\Process\PhpExecutableFinder;
  */
 class Autoupdater
 {
-    /**
-     * @var string
-     */
-    private $projectName;
     /**
      * @var string
      */
@@ -56,11 +54,9 @@ class Autoupdater
     /**
      * Autoupdater constructor.
      * @param string $directory
-     * @param string $projectName
      */
-    public function __construct(string $projectName, string $directory)
+    public function __construct(string $directory)
     {
-        $this->projectName = $projectName;
         $this->projectRoot = $directory;
         $this->loadAppConfiguration();
         $this->loadProjectConfiguration($this->projectRoot . '/autoupdater.yaml');
@@ -82,6 +78,12 @@ class Autoupdater
         $this->projectConfiguration = new ProjectConfiguration($filename);
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws Exception
+     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -176,6 +178,11 @@ class Autoupdater
         }
     }
 
+    /**
+     * @param SymfonyStyle $io
+     * @return bool
+     * @throws Exception
+     */
     private function createUpdateCommit(SymfonyStyle $io): bool
     {
         $io->section('Creating update commit');
@@ -204,13 +211,12 @@ class Autoupdater
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     private static function getUpdateTitle(): string
     {
-        $date = (new \DateTime('now', new DateTimeZone('Europe/Berlin')))->format('r');
-        $commitTitle = "Automatic update on ${date}";
-        return $commitTitle;
+        $date = (new DateTime('now', new DateTimeZone('Europe/Berlin')))->format('r');
+        return "Automatic update on ${date}";
     }
 
     /**
@@ -240,12 +246,11 @@ MSG;
             }
         }
 
-        $commitMessage = <<<MSG
+        return <<<MSG
 ${commitTitle}
 
 ${updateMessages}
 MSG;
-        return $commitMessage;
     }
 
     private function pushUpdateCommit(SymfonyStyle $io): void
@@ -262,7 +267,7 @@ MSG;
                     'upstream'
                 ]
             );
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
         }
 
         $repository->run(
@@ -290,11 +295,15 @@ MSG;
         $repository->getWorkingCopy()->checkout('develop');
     }
 
+    /**
+     * @param SymfonyStyle $io
+     * @throws Exception
+     */
     private function createOrUpdateMergeRequest(SymfonyStyle $io): void
     {
         $gitlabProject = Project::fromArray(
             $this->gitlabClient,
-            $this->gitlabClient->projects->show($this->projectName)
+            $this->gitlabClient->projects->show($this->projectConfiguration->getGitlabProjectName())
         );
         $currentMergeRequests = $this->gitlabClient->merge_requests->all(
             $gitlabProject->id,

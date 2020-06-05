@@ -12,12 +12,10 @@ $application = (new SingleCommandApplication())
     ->setVersion('@package_version@')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
         $repositoryPath = getcwd();
-        $gitlabProjectName = getenv('AUTOUPDATER_PROJECT_NAME');
 
-        $autoupdater = new Autoupdater($gitlabProjectName, $repositoryPath);
+        $autoupdater = new Autoupdater($repositoryPath);
         $autoupdater->run($input, $output);
 
         return;
     });
 $application->run();
-
