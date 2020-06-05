@@ -17,7 +17,6 @@ use Mfc\Autoupdater\Configuration\ProjectConfiguration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * Class Autoupdater
@@ -43,10 +42,6 @@ class Autoupdater
      */
     private $gitlabClient;
     /**
-     * @var string
-     */
-    private $phpBinaryPath;
-    /**
      * @var array
      */
     private $updateMessages = [];
@@ -63,9 +58,6 @@ class Autoupdater
 
         $this->gitlabClient = GitLabClient::create($this->appConfiguration->getGitlabUrl())
             ->authenticate($this->appConfiguration->getGitlabAuthToken(), GitLabClient::AUTH_URL_TOKEN);
-
-        $phpBinaryFinder = new PhpExecutableFinder();
-        $this->phpBinaryPath = $phpBinaryFinder->find();
     }
 
     private function loadAppConfiguration(): void
