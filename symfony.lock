@@ -35,8 +35,14 @@
     "m4tthumphrey/php-gitlab-api": {
         "version": "9.16.0"
     },
+    "paragonie/random_compat": {
+        "version": "v9.99.99"
+    },
     "php": {
         "version": "7.4"
+    },
+    "php-http/cache-plugin": {
+        "version": "1.7.1"
     },
     "php-http/client-common": {
         "version": "2.1.0"
@@ -70,6 +76,9 @@
     },
     "phpstan/phpstan-symfony": {
         "version": "0.12.6"
+    },
+    "psr/cache": {
+        "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
@@ -157,6 +166,9 @@
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.17.0"
+    },
+    "symfony/polyfill-php70": {
+        "version": "v1.18.0"
     },
     "symfony/polyfill-php73": {
         "version": "v1.17.0"
