@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Set Environment Variables
         run: |
-          echo "BOX_VERSION=3.8.4" >> $GITHUB_ENV
+          echo "BOX_VERSION=3.13.0" >> $GITHUB_ENV
 
       - name: Checkout Code
         uses: actions/checkout@v2
