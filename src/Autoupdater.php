@@ -17,6 +17,8 @@ use Mfc\Autoupdater\Configuration\ProjectConfiguration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\Psr18Client;
 
 /**
  * Class Autoupdater
@@ -56,8 +58,9 @@ class Autoupdater
         $this->loadAppConfiguration();
         $this->loadProjectConfiguration($this->projectRoot . '/autoupdater.yaml');
 
-        $this->gitlabClient = GitLabClient::create($this->appConfiguration->getGitlabUrl())
-            ->authenticate($this->appConfiguration->getGitlabAuthToken(), GitLabClient::AUTH_URL_TOKEN);
+        $this->gitlabClient = new GitLabClient();
+        $this->gitlabClient->setUrl($this->appConfiguration->getGitlabUrl());
+        $this->gitlabClient->authenticate($this->appConfiguration->getGitlabAuthToken(), GitLabClient::AUTH_HTTP_TOKEN);
     }
 
     private function loadAppConfiguration(): void
@@ -293,12 +296,9 @@ MSG;
      */
     private function createOrUpdateMergeRequest(SymfonyStyle $io): void
     {
-        $gitlabProject = Project::fromArray(
-            $this->gitlabClient,
-            $this->gitlabClient->projects->show($this->projectConfiguration->getGitlabProjectName())
-        );
-        $currentMergeRequests = $this->gitlabClient->merge_requests->all(
-            $gitlabProject->id,
+        $gitlabProject = $this->gitlabClient->projects()->show($this->projectConfiguration->getGitlabProjectName());
+        $currentMergeRequests = $this->gitlabClient->mergeRequests()->all(
+            $gitlabProject['id'],
             [
                 'source_branch' => $this->projectConfiguration->getBranch(),
                 'state' => 'opened'
@@ -307,11 +307,11 @@ MSG;
 
         $assignee = null;
         if ($this->projectConfiguration->getAssignee()) {
-            $users = $this->gitlabClient->users->all([
+            $users = $this->gitlabClient->users()->all([
                 'username' => $this->projectConfiguration->getAssignee()
             ]);
 
-            $assignee = User::fromArray($this->gitlabClient, $users[0]);
+            $assignee = $users[0];
         }
 
         $mergeRequestTitle = self::getUpdateTitle();
@@ -321,30 +321,25 @@ MSG;
         if (empty($currentMergeRequests)) {
             $io->comment("Creating merge request...");
 
-            $this->gitlabClient->merge_requests->create(
-                $gitlabProject->id,
+            $this->gitlabClient->mergeRequests()->create(
+                $gitlabProject['id'],
                 $this->projectConfiguration->getBranch(),
                 'develop',
                 $mergeRequestTitle,
-                $assignee instanceof User ? $assignee->id : null,
-                null,
-                $mergeRequestDescription,
                 [
+                    'assignee' => is_array($assignee) ? $assignee['id'] : null,
+                    'description' => $mergeRequestDescription,
                     'remove_source_branch' => true,
-                    'squash' => true
-                ]
+                    'squash' => true,
+                ],
             );
         } else {
             $io->comment("Updating merge request...");
 
-            $currentMergeRequest = MergeRequest::fromArray(
-                $this->gitlabClient,
-                $gitlabProject,
-                $currentMergeRequests[0]
-            );
-            $this->gitlabClient->merge_requests->update(
-                $gitlabProject->id,
-                $currentMergeRequest->iid,
+            $currentMergeRequest = $currentMergeRequests[0];
+            $this->gitlabClient->mergeRequests()->update(
+                $gitlabProject['id'],
+                $currentMergeRequest['iid'],
                 [
                     'title' => $mergeRequestTitle,
                     'description' => $mergeRequestDescription,

@@ -11,16 +11,18 @@
   ],
   "require": {
     "php": ">=7.3",
-    "composer/composer": "^1.10",
+    "composer/composer": "^2.1",
     "gitonomy/gitlib": "^1.2",
-    "m4tthumphrey/php-gitlab-api": "^9.16",
-    "php-http/guzzle6-adapter": "^2.0",
+    "guzzlehttp/guzzle": "^7.2",
+    "http-interop/http-factory-guzzle": "^1.0",
+    "m4tthumphrey/php-gitlab-api": "^10.3",
     "symfony/console": "*",
     "symfony/flex": "^1.6",
     "symfony/process": "*",
     "symfony/yaml": "*"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "phpstan/extension-installer": "^1.0",
     "phpstan/phpstan-symfony": "^0.12",
     "squizlabs/php_codesniffer": "^3.4"
