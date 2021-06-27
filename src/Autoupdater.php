@@ -113,12 +113,14 @@ class Autoupdater
                 getenv('HOME') . '/.composer',
                 realpath($this->projectRoot . '/' . $package)
             );
-            $composer->runComposerCommand([
+            $output = $composer->runComposerCommand([
                 'command' => 'outdated',
                 '--no-ansi' => true,
                 '--strict' => true,
                 '--minor-only' => true
             ], $this->projectRoot);
+
+            $io->note('Output: ' . PHP_EOL . $output);
 
             if ($composer->getLastExitCode() > 0) {
                 return true;
@@ -168,6 +170,8 @@ class Autoupdater
                 '--no-ansi' => true,
                 '--no-progress' => true
             ], $this->projectRoot);
+
+            $io->note('Output: ' . PHP_EOL . $composerOutput);
 
             $this->updateMessages[$package] = $composerOutput;
         }
