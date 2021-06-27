@@ -18,6 +18,7 @@
     "php-http/guzzle6-adapter": "^2.0",
     "symfony/console": "*",
     "symfony/flex": "^1.6",
+    "symfony/http-client": "5.3.*",
     "symfony/process": "*",
     "symfony/yaml": "*"
   },

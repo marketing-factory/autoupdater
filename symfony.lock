@@ -161,6 +161,12 @@
             ".env"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.3.2"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.4.0"
+    },
     "symfony/options-resolver": {
         "version": "v4.4.3"
     },

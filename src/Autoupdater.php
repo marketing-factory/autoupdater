@@ -17,6 +17,8 @@ use Mfc\Autoupdater\Configuration\ProjectConfiguration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient\Psr18Client;
 
 /**
  * Class Autoupdater
@@ -56,8 +58,12 @@ class Autoupdater
         $this->loadAppConfiguration();
         $this->loadProjectConfiguration($this->projectRoot . '/autoupdater.yaml');
 
-        $this->gitlabClient = GitLabClient::create($this->appConfiguration->getGitlabUrl())
-            ->authenticate($this->appConfiguration->getGitlabAuthToken(), GitLabClient::AUTH_URL_TOKEN);
+        $httpClient = new Psr18Client(
+            HttpClient::createForBaseUri($this->appConfiguration->getGitlabUrl())
+        );
+
+        $this->gitlabClient = GitLabClient::createWithHttpClient($httpClient)
+            ->authenticate($this->appConfiguration->getGitlabAuthToken(), GitLabClient::AUTH_HTTP_TOKEN);
     }
 
     private function loadAppConfiguration(): void
