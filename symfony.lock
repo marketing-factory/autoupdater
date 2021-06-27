@@ -8,6 +8,9 @@
     "composer/composer": {
         "version": "1.10.7"
     },
+    "composer/metadata-minifier": {
+        "version": "1.0.0"
+    },
     "composer/semver": {
         "version": "1.5.1"
     },
@@ -21,31 +24,22 @@
         "version": "v1.2.0"
     },
     "guzzlehttp/guzzle": {
-        "version": "6.5.2"
+        "version": "7.3.0"
     },
     "guzzlehttp/promises": {
-        "version": "v1.3.1"
+        "version": "1.4.1"
     },
     "guzzlehttp/psr7": {
-        "version": "1.6.1"
+        "version": "1.8.2"
+    },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.0.0"
     },
     "justinrainbow/json-schema": {
         "version": "5.2.10"
     },
     "m4tthumphrey/php-gitlab-api": {
         "version": "9.16.0"
-    },
-    "nyholm/psr7": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
-        },
-        "files": [
-            "config/packages/nyholm_psr7.yaml"
-        ]
     },
     "paragonie/random_compat": {
         "version": "v9.99.99"
@@ -61,9 +55,6 @@
     },
     "php-http/discovery": {
         "version": "1.7.4"
-    },
-    "php-http/guzzle6-adapter": {
-        "version": "v2.0.1"
     },
     "php-http/httplug": {
         "version": "2.1.0"
@@ -109,6 +100,12 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "react/promise": {
+        "version": "v2.8.0"
+    },
+    "roave/security-advisories": {
+        "version": "dev-latest"
     },
     "seld/jsonlint": {
         "version": "1.8.0"
@@ -161,12 +158,6 @@
             ".env"
         ]
     },
-    "symfony/http-client": {
-        "version": "v5.3.2"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v2.4.0"
-    },
     "symfony/options-resolver": {
         "version": "v4.4.3"
     },
@@ -174,9 +165,6 @@
         "version": "v1.13.1"
     },
     "symfony/polyfill-intl-grapheme": {
-        "version": "v1.17.0"
-    },
-    "symfony/polyfill-intl-idn": {
         "version": "v1.17.0"
     },
     "symfony/polyfill-intl-normalizer": {
