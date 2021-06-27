@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Mfc\Autoupdater;
 
+use Composer\Factory;
 use DateTime;
 use DateTimeZone;
 use Exception;
@@ -74,6 +75,18 @@ class Autoupdater
     }
 
     /**
+     * @return string
+     * @throws \ReflectionException
+     */
+    private static function getComposerHomeDir(): string
+    {
+        $factoryReflectionClass = new \ReflectionClass(Factory::class);
+        $getHomeDirMethod = $factoryReflectionClass->getMethod('getHomeDir');
+        $getHomeDirMethod->setAccessible(true);
+        return (string)$getHomeDirMethod->invoke(null);
+    }
+
+    /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
@@ -106,11 +119,13 @@ class Autoupdater
     {
         $io->section('Check if update is needed');
 
+        $composerHomeDir = self::getComposerHomeDir();
+
         foreach ($this->projectConfiguration->getPackages() as $package) {
             $io->comment("Checking package {$package}...");
 
             $composer = new ComposerApplication(
-                getenv('HOME') . '/.composer',
+                $composerHomeDir,
                 realpath($this->projectRoot . '/' . $package)
             );
             $output = $composer->runComposerCommand([
@@ -157,12 +172,14 @@ class Autoupdater
     {
         $this->updateMessages = [];
 
+        $composerHomeDir = self::getComposerHomeDir();
+
         $io->section('Performing package updates');
         foreach ($this->projectConfiguration->getPackages() as $package) {
             $io->comment("Updating package {$package}...");
 
             $composer = new ComposerApplication(
-                getenv('HOME') . '/.composer',
+                $composerHomeDir,
                 realpath($this->projectRoot . '/' . $package)
             );
             $composerOutput = $composer->runComposerCommand([
