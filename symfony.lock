@@ -35,6 +35,18 @@
     "m4tthumphrey/php-gitlab-api": {
         "version": "9.16.0"
     },
+    "nyholm/psr7": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
+    },
     "paragonie/random_compat": {
         "version": "v9.99.99"
     },
