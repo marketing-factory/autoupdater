@@ -345,7 +345,7 @@ MSG;
             $this->gitlabClient->mergeRequests()->create(
                 $gitlabProject['id'],
                 $this->projectConfiguration->getBranch(),
-                'develop',
+                $this->projectConfiguration->getTargetBranch(),
                 $mergeRequestTitle,
                 [
                     'assignee_id' => is_array($assignee) ? $assignee['id'] : null,
