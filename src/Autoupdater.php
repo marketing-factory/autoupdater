@@ -348,7 +348,7 @@ MSG;
                 'develop',
                 $mergeRequestTitle,
                 [
-                    'assignee' => is_array($assignee) ? $assignee['id'] : null,
+                    'assignee_id' => is_array($assignee) ? $assignee['id'] : null,
                     'description' => $mergeRequestDescription,
                     'remove_source_branch' => true,
                     'squash' => true,
@@ -364,7 +364,7 @@ MSG;
                 [
                     'title' => $mergeRequestTitle,
                     'description' => $mergeRequestDescription,
-                    'assignee' => $assignee instanceof User ? $assignee->id : null,
+                    'assignee_id' => $assignee instanceof User ? $assignee->id : null,
                     'remove_source_branch' => true,
                     'squash' => true
                 ]
