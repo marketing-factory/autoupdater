@@ -13,6 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 class ProjectConfiguration
 {
     public const DEFAULT_BRANCH_NAME = 'support/autoupdate';
+    public const DEFAULT_TARGET_BRANCH_NAME = 'develop';
 
     /**
      * @var string|null
@@ -22,6 +23,10 @@ class ProjectConfiguration
      * @var string
      */
     private $branch = self::DEFAULT_BRANCH_NAME;
+    /**
+     * @var string
+     */
+    private $targetBranch = self::DEFAULT_TARGET_BRANCH_NAME;
     /**
      * @var string
      */
@@ -43,6 +48,10 @@ class ProjectConfiguration
 
         if (isset($config['branch'])) {
             $this->branch = (string)$config['branch'];
+        }
+
+        if (isset($config['target_branch'])) {
+            $this->targetBranch = (string)$config['target_branch'];
         }
 
         if (isset($config['packages'])) {
@@ -75,6 +84,14 @@ class ProjectConfiguration
     public function getBranch(): string
     {
         return $this->branch;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTargetBranch(): string
+    {
+        return $this->targetBranch;
     }
 
     /**
