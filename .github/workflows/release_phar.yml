@@ -29,7 +29,7 @@ jobs:
 
       # Ensure that deps will work on lowest supported PHP version
       - name: Choose a Suitable PHP Version to Build PHAR
-        run: composer config platform.php 7.4.20
+        run: composer config platform.php 7.4.30
 
       - name: Get Composer Cache Directory
         id: composer-cache
