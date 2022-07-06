@@ -20,13 +20,6 @@ class ComposerApplication
     const COMPOSER_WORKING_DIR = '--working-dir';
 
     /**
-     * Path to Composer home directory
-     *
-     * @var string
-     */
-    private $composerHome;
-
-    /**
      * Path to composer.json file
      *
      * @var string
@@ -77,7 +70,6 @@ class ComposerApplication
         $this->consoleOutput = $consoleOutput ? $consoleOutput : new BufferedOutput();
 
         $this->composerJson = $pathToComposerJson;
-        $this->composerHome = $pathToComposerHome;
 
         putenv('COMPOSER_HOME=' . $pathToComposerHome);
 
