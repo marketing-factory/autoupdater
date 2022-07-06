@@ -38,7 +38,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": true,
-      "require": "5.3.*"
+      "require": "5.4.*"
     }
   },
   "scripts": {
@@ -50,6 +50,10 @@
     "preferred-install": {
       "gitonomy/gitlib": "source"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "symfony/flex": true
+    }
   }
 }
