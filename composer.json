@@ -46,14 +46,17 @@
     "phpstan": "vendor/bin/phpstan analyse --level=5 --memory-limit=512M --no-progress src"
   },
   "config": {
-    "optimize-autoloader": true,
-    "preferred-install": {
-      "gitonomy/gitlib": "source"
-    },
-    "sort-packages": true,
     "allow-plugins": {
       "phpstan/extension-installer": true,
       "symfony/flex": true
-    }
+    },
+    "optimize-autoloader": true,
+    "platform": {
+      "php": "7.4.30"
+    },
+    "preferred-install": {
+      "gitonomy/gitlib": "source"
+    },
+    "sort-packages": true
   }
 }
