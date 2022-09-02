@@ -10,12 +10,10 @@ require __DIR__ . '/vendor/autoload.php';
 $application = (new SingleCommandApplication())
     ->setName('Composer Autoupdater')
     ->setVersion('@package_version@')
-    ->setCode(function (InputInterface $input, OutputInterface $output) {
+    ->setCode(function (InputInterface $input, OutputInterface $output): int {
         $repositoryPath = getcwd();
 
         $autoupdater = new Autoupdater($repositoryPath);
-        $autoupdater->run($input, $output);
-
-        return;
+        return $autoupdater->run($input, $output);
     });
 $application->run();
