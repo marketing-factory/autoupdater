@@ -28,6 +28,9 @@ use Symfony\Component\HttpClient\Psr18Client;
  */
 class Autoupdater
 {
+    private const EXIT_SUCCESS = 0;
+    private const EXIT_FAILURE = 1;
+
     /**
      * @var string
      */
@@ -98,21 +101,23 @@ class Autoupdater
 
         if (!$this->updateIsNeeded($io)) {
             $io->text('No update needed.');
-            return 0;
+            return self::EXIT_SUCCESS;
         }
 
         $this->createUpdateBranch($io);
-        $this->performUpdates($io);
+        if (!$this->performUpdates($io)) {
+            return self::EXIT_FAILURE;
+        }
 
         if (!$this->createUpdateCommit($io)) {
             // No updates were made
-            return 0;
+            return self::EXIT_SUCCESS;
         }
 
         $this->pushUpdateCommit($io);
         $this->createOrUpdateMergeRequest($io);
 
-        return 0;
+        return self::EXIT_SUCCESS;
     }
 
     private function updateIsNeeded(SymfonyStyle $io): bool
@@ -168,7 +173,7 @@ class Autoupdater
         $workingCopy->checkout($autoupdateBranch);
     }
 
-    private function performUpdates(SymfonyStyle $io): void
+    private function performUpdates(SymfonyStyle $io): bool
     {
         $this->updateMessages = [];
 
@@ -188,10 +193,16 @@ class Autoupdater
                 '--no-progress' => true
             ], $this->projectRoot);
 
+            if ($composer->getLastExitCode() > 0) {
+                return false;
+            }
+
             $io->note('Output: ' . PHP_EOL . $composerOutput);
 
             $this->updateMessages[$package] = $composerOutput;
         }
+
+        return true;
     }
 
     /**
